@@ -7,7 +7,10 @@ const cors = require("cors");
 const app = express();
 const PORT = 5000;
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 30000,
+  socketTimeoutMS: 45000
+})
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
@@ -21,3 +24,7 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+const noteRoutes = require("./routes/notes");
+app.use("/api/notes", noteRoutes);
+
