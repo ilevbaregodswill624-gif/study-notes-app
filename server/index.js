@@ -1,6 +1,9 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 
+const multer = require('multer');
+const path = require('path'); 
+
 const express = require("express");
 const cors = require("cors");
 
@@ -16,6 +19,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static("uploads"));
 
 app.get("/", (req, res) => {
   res.send("Study Notes API is running!");

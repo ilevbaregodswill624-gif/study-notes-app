@@ -12,6 +12,19 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.patch("/:id", async (req, res) => {
+  try {
+    const updatedNote = await Note.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.json(updatedNote);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+  });
+
 // POST a new note
 router.post("/", async (req, res) => {
   const note = new Note({
@@ -29,3 +42,4 @@ router.post("/", async (req, res) => {
 });
 
 module.exports = router;
+
