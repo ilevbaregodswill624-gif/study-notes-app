@@ -7,6 +7,10 @@ function App() {
   const [subject, setSubject] = useState("")
   const [file, setFile] = useState(null)
 
+  const [searchTerm, setSearchTerm] = useState("")
+  const [subjectFilter, setSubjectFilter] = useState("all")
+  const [reviewedFilter, setReviewedFilter] = useState("all")
+
   const [editingNoteId, setEditingNoteId] = useState(null)
   const [editingTitle, setEditingTitle] = useState("")
   const [editingSubject, setEditingSubject] = useState("")
@@ -103,6 +107,23 @@ function App() {
       })
       .catch(err => console.error("Error updating note:", err))
   }
+  const filteredNotes = notes.filter(note => {
+    const search = searchTerm.toLowerCase();
+
+    const matchesSearch = 
+note.title.toLowerCase().includes(search) || 
+note.subject.toLowerCase().includes(search);
+
+    const matchesSubject = 
+    subjectFilter === "all" || note.subject === subjectFilter;
+
+    const matchesReviewed =
+    reviewedFilter === "all" || 
+    (reviewedFilter === "reviewed" && note.reviewed) || 
+    (reviewedFilter === "not_reviewed" && !note.reviewed);
+    
+    return matchesSearch && matchesSubject && matchesReviewed;
+  });
 
   return (
     <div style={{ padding: "20px" }}>
@@ -127,9 +148,34 @@ function App() {
         />
         <button onClick={handleAddNote}>Add Note</button>
       </div>
+      <div className="filters">
+        <input
+          type="text"
+          placeholder="Search by title or subject"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <select
+          value={subjectFilter}
+          onChange={(e) => setSubjectFilter(e.target.value)}
+        >
+          <option value="all">All Subjects</option>
 
-      <ul>
-        {notes.map((note) => (
+          {Array.from(new Set(notes.map(note => note.subject))).map(subject => (
+            <option key={subject} value={subject}>{subject}</option>
+          ))}
+        </select>
+        <select
+          value={reviewedFilter}
+          onChange={(e) => setReviewedFilter(e.target.value)}
+        >
+          <option value="all">All</option>
+          <option value="reviewed">Reviewed</option>
+          <option value="not_reviewed">Not Reviewed</option>
+        </select>
+      </div>
+       <ul>
+        {filteredNotes.map((note) => (
           <li key={note._id}>
             {editingNoteId === note._id ? (
               <div>
@@ -164,14 +210,30 @@ type="checkbox"
                  View File
                 </a>
               )}
-              <button onClick={() => handleStartEditing(note._id, note.title, note.subject)}>Edit</button>
-              <button onClick={() => handleDelete(note._id)}>Delete</button>
+              <button onClick={() => 
+              handleStartEditing(note._id, note.title, note.subject)}>
+             Edit
+              </button>
+              <button 
+              onClick={() =>{
+                if (
+                  window.confirm(`Are you sure you want to delete the note "${note.title}"?`)
+                ) {
+                  handleDelete(note._id)
+                }
+              }}
+              >
+                Delete
+              </button>
               </>
             )}
           </li>
         ))}
+               
       </ul>
     </div>
-  )
-}
+            )
+          }
+
+
 export default App

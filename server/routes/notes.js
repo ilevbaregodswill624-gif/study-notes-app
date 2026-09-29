@@ -2,7 +2,19 @@ const express = require("express");
 const router = express.Router();
 const Note = require("../models/Notes");
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const path = require("path")
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + "-" + file.originalname;
+    cb(null, uniqueName);
+  }
+})
+
+const upload = multer({ storage: storage });
 
 // GET all notes
 router.get("/", async (req, res) => {
