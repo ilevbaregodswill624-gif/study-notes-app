@@ -73,6 +73,22 @@ function App() {
       .catch(err => console.error("Error updating note:", err))
   }
 
+  // Toggle favorite status
+  function handleToggleFavorite(id, currentStatus) {
+    fetch(`http://localhost:5000/api/notes/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ favorite: !currentStatus })
+    })
+      .then(res => res.json())
+      .then(updatedNote => {
+        setNotes(notes.map(note =>
+          note._id === id ? updatedNote : note
+        ))
+      })
+      .catch(err => console.error("Error updating note:", err))
+  }
+
   // Start editing a note
   function handleStartEditing(id, title, subject) {
     setEditingNoteId(id)
@@ -191,6 +207,7 @@ note.subject.toLowerCase().includes(search);
                 />
                 <button onClick={handleSaveEditing}>Save</button>
                 <button onClick={handleCancelEditing}>Cancel</button>
+            
               </div>
             ) : (
               <>
@@ -201,6 +218,11 @@ type="checkbox"
                 checked={note.reviewed}
                 onChange={() => handleToggleReviewed(note._id, note.reviewed)}
               />
+
+              <button onClick={() => handleToggleFavorite(note._id, note.favorite)}>
+                 {note.favorite ? "⭐" : "☆"}
+              </button>
+
               {note.filePath && (
                 <a href={`http://localhost:5000/uploads/${note.filePath}`}
                   target="_blank"
