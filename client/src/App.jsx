@@ -10,18 +10,30 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("")
   const [subjectFilter, setSubjectFilter] = useState("all")
   const [reviewedFilter, setReviewedFilter] = useState("all")
+  const [filter , setFilter] = useState("all")
 
   const [editingNoteId, setEditingNoteId] = useState(null)
   const [editingTitle, setEditingTitle] = useState("")
   const [editingSubject, setEditingSubject] = useState("")
 
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
   // Fetch all notes when the page loads
   useEffect(() => {
     fetch("http://localhost:5000/api/notes")
       .then(res => res.json())
-      .then(data => setNotes(data))
-      .catch(err => console.error("Error fetching notes:", err))
-  }, [])
+      .then(data => {
+        setNotes(data)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error("Error fetching notes:", err)
+    setError("Failed to fetch notes. Please try again later.")
+    setLoading(false)
+  })
+
+}, [])
 
   // Add a new note
   function handleAddNote() {
@@ -76,7 +88,7 @@ function App() {
   // Toggle favorite status
   function handleToggleFavorite(id, currentStatus) {
     fetch(`http://localhost:5000/api/notes/${id}`, {
-      method: "PATCH",
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ favorite: !currentStatus })
     })
@@ -138,8 +150,23 @@ note.subject.toLowerCase().includes(search);
     (reviewedFilter === "reviewed" && note.reviewed) || 
     (reviewedFilter === "not_reviewed" && !note.reviewed);
     
-    return matchesSearch && matchesSubject && matchesReviewed;
+    const matchesFavorite =
+    filter === "all" || 
+    (filter === "favorite" && note.favorite) || 
+    (filter === "not_favorite" && !note.favorite);
+    
+    return matchesSearch && matchesSubject && matchesReviewed && matchesFavorite;
+
   });
+  const subjects = [...new Set(notes.map(note => note.subject))];
+
+  if (loading) {
+    return <div>Loading notes...</div>
+  }
+
+  if (error) {
+    return <div>{error}</div>
+  }
 
   return (
     <div style={{ padding: "20px" }}>
@@ -189,6 +216,15 @@ note.subject.toLowerCase().includes(search);
           <option value="reviewed">Reviewed</option>
           <option value="not_reviewed">Not Reviewed</option>
         </select>
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="all">All</option>
+          <option value="favorite">Favorite</option>
+          <option value="not_favorite">Not Favorite</option>
+        </select>
+
       </div>
        <ul>
         {filteredNotes.map((note) => (
@@ -219,8 +255,10 @@ type="checkbox"
                 onChange={() => handleToggleReviewed(note._id, note.reviewed)}
               />
 
-              <button onClick={() => handleToggleFavorite(note._id, note.favorite)}>
-                 {note.favorite ? "⭐" : "☆"}
+              <button onClick={() => handleToggleFavorite(note._id, note.favorite)}
+               style={{ color: note.favorite ? "gold" : "black" }}
+                >
+                {note.favorite ? "★" : "☆"}
               </button>
 
               {note.filePath && (

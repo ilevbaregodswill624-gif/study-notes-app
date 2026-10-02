@@ -42,7 +42,27 @@ router.post("/", upload.single('file'), async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+// UPDATE a note
+router.put("/:id", upload.single('file'), async (req, res) => {
+  try {
+    const updatedData = {};
+    if (req.body.title !== undefined) updatedData.title = req.body.title;
+    if (req.body.subject !== undefined) updatedData.subject = req.body.subject;
+    if (req.body.content !== undefined) updatedData.content = req.body.content;
+    if (req.body.reviewed !== undefined) updatedData.reviewed = req.body.reviewed;
+    if (req.body.favorite !== undefined) updatedData.favorite = req.body.favorite;
+    if (req.file) {
 
+      
+      // Only change the file if a new file is uploaded
+      updatedData.filePath = req.file.filename;
+    }
+    const updatedNote = await Note.findByIdAndUpdate(req.params.id, updatedData, { new: true });
+    res.json(updatedNote);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 // DELETE a note
 router.delete("/:id", async (req, res) => {
   try {
