@@ -1,41 +1,40 @@
 const mongoose = require("mongoose");
 
 const noteSchema = new mongoose.Schema({
-  title: { 
+  title: {
     type: String,
-     required: true 
-    },
-
-  subject: { 
-    type: String,
-    required: true
+    required: true,
   },
 
-  content: { 
-    type: String, 
-    default: "" 
+  subject: {
+    type: String,
+    required: true,
   },
 
-  reviewed: { 
-    type: Boolean, 
-    default: false 
+  content: {
+    type: String,
+    default: "",
+  },
+
+  reviewed: {
+    type: Boolean,
+    default: false,
+  },
+
+  favorite: {
+    type: Boolean,
+    default: false,
   },
 
   filePath: {
     type: String,
-    default: ""
+    default: "",
   },
 
-  createdAt: { 
-    type: Date, 
-    default: Date.now 
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
-
-  favorite: { 
-    type: Boolean, 
-    default: false 
-  }
 });
 
 module.exports = mongoose.model("Note", noteSchema);
-
