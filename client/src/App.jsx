@@ -11,10 +11,12 @@ function App() {
   const [subjectFilter, setSubjectFilter] = useState("all");
   const [reviewedFilter, setReviewedFilter] = useState("all");
   const [filter, setFilter] = useState("all");
+  const [activePage, setActivePage ] = useState("dashboard");
 
   const [editingNoteId, setEditingNoteId] = useState(null);
   const [editingTitle, setEditingTitle] = useState("");
   const [editingSubject, setEditingSubject] = useState("");
+
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -143,9 +145,23 @@ function App() {
       })
       .catch((err) => console.error("Error updating note:", err));
   }
+const sidebarNotes = notes.filter((note) => {
+  if (activePage === "favorites") {
+    return note.favorite; 
+} 
+if (activePage === "reviewed") {
+  return note.reviewed;
+}
+return true;
+});
 
   const filteredNotes = notes.filter((note) => {
     const search = searchTerm.toLowerCase();
+
+    const matchesPage = 
+     activePage === "dashboard" ||
+     (activePage === "favorites" && note.favorite) ||
+     (activePage === "reviewed" && note.reviewed);
 
     const matchesSearch =
       note.title.toLowerCase().includes(search) ||
@@ -166,6 +182,7 @@ function App() {
       (filter === "not_favorite" && !note.favorite);
 
     return (
+      matchesPage &&
       matchesSearch &&
       matchesSubject &&
       matchesReviewed &&
@@ -200,17 +217,51 @@ function App() {
         </div>
 
         <nav className="sidebar-nav">
-          <button className="nav-item active">
+          <button 
+          className={`nav-item ${
+          activePage === "dashboard" ? "active" : ""
+  }`}
+  onClick={() => {
+    setActivePage("dashboad");
+    setFilter("all");
+    setReviewedFilter("all");
+    setSubjectFilter("all");
+    setSubjectTerm("");
+  }}
+    >
             <span>▦</span>
             Dashboard
           </button>
 
-          <button className="nav-item">
+          <button 
+          className={`nav-item ${
+            activePage === "Favorites" ? "active" : ""
+          }`}
+          onClick={() => { 
+            setActivePage("favorite");
+            setFilter("all");
+            setReviewedFilter("all");
+            setSubjectFilter("all");
+            setSubjectTerm("");
+          }} 
+            
+          >
             <span>☆</span>
             Favorites
           </button>
 
-          <button className="nav-item">
+          <button 
+          className={`nav-item ${
+            activePage === "reviewed" ? "active" : ""
+          }`}
+          onClick={() => {
+            setActivePage("reviewed");
+            setFilter("all");
+            setReviewedFilter("all");
+            setSubjectFilter("all");
+            setSubjectTerm("");
+          }}
+          >
             <span>✓</span>
             Reviewed
           </button>

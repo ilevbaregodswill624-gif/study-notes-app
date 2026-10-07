@@ -1,16 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
-  --bg: #f6f7fb;
+  --bg: #f7f8fa;
+  --sidebar: #111318;
+  --sidebar-hover: #1d2028;
   --card: #ffffff;
-  --primary: #6c5ce7;
-  --primary-dark: #5847d6;
-  --text: #171827;
-  --muted: #85889b;
-  --border: #e9e9f1;
-  --sidebar: #171827;
-  --danger: #ef5350;
-  --success: #22a06b;
+  --text: #15171c;
+  --muted: #858b98;
+  --border: #e7e9ed;
+  --primary: #635bff;
+  --primary-hover: #5148e5;
+  --success: #20a464;
+  --danger: #e55353;
+  --yellow: #e7a928;
 }
 
 * {
@@ -30,326 +32,399 @@ select {
   font-family: inherit;
 }
 
-/* APP */
+button {
+  cursor: pointer;
+}
+
+/* =========================
+   APP
+========================= */
 
 .app {
   min-height: 100vh;
   display: flex;
 }
 
-/* SIDEBAR */
+/* =========================
+   SIDEBAR
+========================= */
 
 .sidebar {
-  width: 250px;
+  width: 240px;
   min-height: 100vh;
   background: var(--sidebar);
   color: white;
-  padding: 28px 18px;
+  padding: 24px 16px;
   display: flex;
   flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 0 10px;
-  margin-bottom: 45px;
+  gap: 11px;
+  padding: 4px 10px;
+  margin-bottom: 38px;
 }
 
 .brand-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: linear-gradient(
-    135deg,
-    #7c6cf2,
-    #5947d5
-  );
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .brand h2 {
   margin: 0;
-  font-size: 17px;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .brand span {
-  color: #9294a7;
-  font-size: 11px;
+  display: block;
+  color: #858b98;
+  font-size: 10px;
+  margin-top: 3px;
 }
 
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 4px;
 }
 
 .nav-item {
+  width: 100%;
   border: none;
   background: transparent;
-  color: #a9aabb;
-  padding: 13px 15px;
-  border-radius: 10px;
+  color: #9297a3;
+  padding: 11px 12px;
+  border-radius: 8px;
   text-align: left;
-  font-size: 14px;
-  cursor: pointer;
+  font-size: 13px;
   display: flex;
-  gap: 13px;
   align-items: center;
+  gap: 12px;
+  transition: 0.2s;
 }
 
 .nav-item span {
-  font-size: 17px;
+  width: 20px;
+  font-size: 16px;
+  text-align: center;
 }
 
-.nav-item:hover,
-.nav-item.active {
-  background: rgba(255, 255, 255, 0.09);
+.nav-item:hover {
+  background: var(--sidebar-hover);
   color: white;
 }
+
+.nav-item.active {
+  background: #20232c;
+  color: white;
+}
+
+.nav-item.active span {
+  color: #817aff;
+}
+
+/* =========================
+   SIDEBAR BOTTOM
+========================= */
 
 .sidebar-bottom {
   margin-top: auto;
 }
 
 .study-tip {
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
-  padding: 15px;
+  background: #191c23;
+  border: 1px solid #252832;
+  border-radius: 10px;
+  padding: 13px;
   display: flex;
-  gap: 10px;
+  gap: 9px;
 }
 
 .study-tip span {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .study-tip p {
   margin: 0;
-  color: #a7a8b7;
-  font-size: 11px;
+  color: #8f95a1;
+  font-size: 10px;
   line-height: 1.5;
 }
 
-/* MAIN */
+/* =========================
+   MAIN
+========================= */
 
 .main {
   flex: 1;
-  padding: 42px 50px;
   max-width: 1500px;
-  margin: auto;
-  background-color: #047af0;
+  padding: 32px 42px;
+  margin: 0 auto;
 }
 
-/* HEADER */
+/* =========================
+   TOPBAR
+========================= */
 
 .topbar {
   display: flex;
   justify-content: space-between;
-  gap: 30px;
-  margin-bottom: 32px;
+  align-items: flex-start;
+  gap: 25px;
+  margin-bottom: 28px;
 }
 
 .eyebrow {
+  margin: 0 0 7px;
   color: var(--primary);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 1.5px;
-  margin: 0 0 8px;
+  letter-spacing: 1.3px;
 }
 
 .topbar h1 {
   margin: 0;
-  font-size: 34px;
-  letter-spacing: -1px;
+  font-size: 28px;
+  letter-spacing: -0.7px;
 }
 
 .subtitle {
+  margin: 7px 0 0;
   color: var(--muted);
-  font-size: 14px;
-  margin-top: 8px;
+  font-size: 12px;
 }
+
+/* =========================
+   STATS
+========================= */
 
 .stats {
   display: flex;
-  gap: 12px;
+  gap: 10px;
 }
 
 .stat-card {
-  min-width: 110px;
-  height: 80px;
-  background: lightblue;
+  min-width: 125px;
+  background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 14px;
-  box-shadow: 0 4px 15px rgba(30, 30, 60, 0.04);
+  border-radius: 10px;
+  padding: 13px 15px;
+  box-shadow: 0 2px 8px rgba(20, 25, 35, 0.025);
 }
 
 .stat-card span {
   display: block;
   color: var(--muted);
-  font-size: 11px;
-  margin-bottom: 7px;
+  font-size: 10px;
+  margin-bottom: 6px;
 }
 
 .stat-card strong {
-  font-size: 22px;
+  font-size: 21px;
 }
 
-/* ADD NOTE */
+/* =========================
+   ADD NOTE
+========================= */
 
 .add-note-card {
-  background: rgb(74, 72, 187);
+  background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 25px;
-  margin-bottom: 22px;
-  box-shadow: 0 6px 25px rgba(30, 30, 60, 0.04);
+  border-radius: 12px;
+  padding: 21px;
+  margin-bottom: 20px;
 }
 
 .section-heading h2,
 .notes-header h2 {
   margin: 0;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .section-heading p,
 .notes-header p {
+  margin: 5px 0 16px;
   color: var(--muted);
-  font-size: 12px;
-  margin: 6px 0 18px;
+  font-size: 11px;
 }
 
 .note-form {
   display: grid;
   grid-template-columns: 1fr 1fr 1.2fr auto;
-  gap: 12px;
+  gap: 9px;
 }
+
+/* =========================
+   INPUTS
+========================= */
 
 input,
 select {
   border: 1px solid var(--border);
-  background: #fafaff;
+  background: #fff;
   color: var(--text);
-  border-radius: 10px;
-  padding: 12px 13px;
+  border-radius: 8px;
+  padding: 10px 11px;
   outline: none;
-  font-size: 13px;
+  font-size: 12px;
+  transition: 0.2s;
+}
+
+input::placeholder {
+  color: #a0a5b0;
 }
 
 input:focus,
 select:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+  box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.08);
 }
 
+/* =========================
+   FILE INPUT
+========================= */
+
 .file-input {
-  border: 1px dashed #d5d4e5;
-  background: #fafaff;
-  border-radius: 10px;
-  padding: 0 13px;
+  border: 1px dashed #d9dce3;
+  background: #fafbfc;
+  border-radius: 8px;
+  padding: 0 11px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 11px;
   cursor: pointer;
   overflow: hidden;
+}
+
+.file-input:hover {
+  border-color: var(--primary);
 }
 
 .file-input input {
   display: none;
 }
 
+/* =========================
+   BUTTONS
+========================= */
+
 .add-button {
   border: none;
-  border-radius: 10px;
-  padding: 0 20px;
+  border-radius: 8px;
+  padding: 0 17px;
   background: var(--primary);
   color: white;
+  font-size: 12px;
   font-weight: 600;
-  cursor: pointer;
   transition: 0.2s;
 }
 
 .add-button:hover {
-  background: var(--primary-dark);
+  background: var(--primary-hover);
   transform: translateY(-1px);
 }
 
-/* TOOLBAR */
+/* =========================
+   TOOLBAR
+========================= */
 
 .toolbar {
   display: flex;
-  gap: 10px;
-  margin-bottom: 25px;
+  gap: 8px;
+  margin-bottom: 22px;
 }
 
 .search-box {
   flex: 1;
+  min-width: 180px;
   background: white;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
-  padding: 0 13px;
+  padding: 0 10px;
 }
 
 .search-box span {
-  color: var(--muted);
-  font-size: 20px;
+  color: #999eaa;
+  font-size: 18px;
 }
 
 .search-box input {
+  flex: 1;
   border: none;
   box-shadow: none;
   background: transparent;
-  flex: 1;
 }
 
 .search-box input:focus {
   box-shadow: none;
 }
 
-/* NOTES */
+/* =========================
+   NOTES HEADER
+========================= */
 
 .notes-header {
-  margin-bottom: 15px;
+  margin-bottom: 13px;
 }
+
+.notes-header p {
+  margin-bottom: 0;
+}
+
+/* =========================
+   NOTES GRID
+========================= */
 
 .notes-grid {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(270px, 1fr)
-  );
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
 }
 
+/* =========================
+   NOTE CARD
+========================= */
+
 .note-card {
-  background: rgb(62, 75, 80);
+  background: white;
   border: 1px solid var(--border);
-  border-radius: 17px;
-  padding: 18px;
-  min-height: 205px;
+  border-radius: 11px;
+  padding: 16px;
+  min-height: 190px;
   display: flex;
   flex-direction: column;
   transition: 0.2s;
-  box-shadow: 0 5px 18px rgba(30, 30, 60, 0.035);
 }
 
 .note-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 28px rgba(30, 30, 60, 0.08);
+  border-color: #d8d5ff;
+  box-shadow: 0 7px 20px rgba(20, 25, 35, 0.06);
+  transform: translateY(-2px);
 }
 
 .favorite-card {
-  border-color: #ddd7ff;
+  border-color: #dedaff;
 }
+
+/* =========================
+   NOTE TOP
+========================= */
 
 .note-top {
   display: flex;
@@ -358,83 +433,102 @@ select:focus {
 }
 
 .note-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 11px;
-  background: #f0edff;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: #f0efff;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 15px;
 }
 
 .favorite-button {
   border: none;
   background: transparent;
-  color: #c5c5d0;
-  font-size: 22px;
-  cursor: pointer;
+  color: #b9bdc7;
+  font-size: 20px;
+  padding: 2px;
+}
+
+.favorite-button:hover {
+  color: var(--yellow);
 }
 
 .favorite-button.is-favorite {
-  color: #f5b82e;
+  color: var(--yellow);
 }
 
+/* =========================
+   NOTE CONTENT
+========================= */
+
 .note-content {
-  margin-top: 18px;
+  margin-top: 16px;
 }
 
 .note-content h3 {
-  margin: 0 0 9px;
-  font-size: 16px;
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  word-break: break-word;
 }
 
 .subject-tag {
   display: inline-block;
-  background: #f1efff;
+  background: #f1f0ff;
   color: var(--primary);
-  padding: 5px 9px;
+  padding: 4px 8px;
   border-radius: 20px;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
 }
 
+/* =========================
+   NOTE FOOTER
+========================= */
+
 .note-footer {
   margin-top: auto;
-  padding-top: 18px;
-  border-top: 1px solid #f0f0f5;
+  padding-top: 15px;
+  border-top: 1px solid #f0f1f3;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
 }
 
 .reviewed {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 9px;
 }
 
 .reviewed input {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   accent-color: var(--success);
 }
 
+/* =========================
+   NOTE ACTIONS
+========================= */
+
 .note-actions {
   display: flex;
-  gap: 5px;
+  gap: 4px;
 }
 
 .note-actions button,
 .view-button {
   border: 1px solid var(--border);
   background: white;
-  color: #55586b;
-  padding: 6px 8px;
-  border-radius: 7px;
-  font-size: 10px;
+  color: #606572;
+  padding: 5px 7px;
+  border-radius: 6px;
+  font-size: 9px;
   text-decoration: none;
   cursor: pointer;
 }
@@ -450,26 +544,29 @@ select:focus {
   color: var(--danger);
 }
 
-/* EDIT */
+/* =========================
+   EDIT
+========================= */
 
 .edit-area {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 9px;
   height: 100%;
 }
 
 .edit-actions {
   display: flex;
-  gap: 8px;
+  gap: 7px;
   margin-top: auto;
 }
 
 .save-button,
 .cancel-button {
   border: none;
-  border-radius: 8px;
-  padding: 9px 13px;
+  border-radius: 7px;
+  padding: 8px 11px;
+  font-size: 10px;
   cursor: pointer;
 }
 
@@ -479,28 +576,38 @@ select:focus {
 }
 
 .cancel-button {
-  background: #f0f0f4;
-  color: #555;
+  background: #eef0f3;
+  color: #555a65;
 }
 
-/* EMPTY */
+/* =========================
+   EMPTY STATE
+========================= */
 
 .empty-state {
   text-align: center;
-  padding: 70px 20px;
+  padding: 60px 20px;
   color: var(--muted);
 }
 
 .empty-state div {
-  font-size: 40px;
+  font-size: 36px;
 }
 
 .empty-state h3 {
   color: var(--text);
-  margin-bottom: 5px;
+  margin: 9px 0 4px;
+  font-size: 15px;
 }
 
-/* LOADING */
+.empty-state p {
+  margin: 0;
+  font-size: 11px;
+}
+
+/* =========================
+   LOADING / ERROR
+========================= */
 
 .loading-screen,
 .error-screen {
@@ -512,13 +619,13 @@ select:focus {
 }
 
 .loader {
-  width: 35px;
-  height: 35px;
-  border: 3px solid #e7e5f5;
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e6e7ed;
   border-top-color: var(--primary);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 @keyframes spin {
@@ -527,7 +634,9 @@ select:focus {
   }
 }
 
-/* MOBILE */
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media (max-width: 1000px) {
   .sidebar {
@@ -535,7 +644,7 @@ select:focus {
   }
 
   .main {
-    padding: 30px;
+    padding: 28px;
   }
 
   .topbar {
@@ -547,7 +656,7 @@ select:focus {
   }
 
   .add-button {
-    height: 45px;
+    height: 42px;
   }
 }
 
@@ -559,11 +668,13 @@ select:focus {
   .sidebar {
     width: 100%;
     min-height: auto;
-    padding: 15px;
+    height: auto;
+    position: relative;
+    padding: 14px;
   }
 
   .brand {
-    margin-bottom: 15px;
+    margin-bottom: 14px;
   }
 
   .sidebar-nav {
@@ -573,6 +684,7 @@ select:focus {
   .nav-item {
     flex: 1;
     justify-content: center;
+    font-size: 11px;
   }
 
   .sidebar-bottom {
@@ -580,7 +692,11 @@ select:focus {
   }
 
   .main {
-    padding: 22px 16px;
+    padding: 20px 14px;
+  }
+
+  .topbar h1 {
+    font-size: 24px;
   }
 
   .stats {
@@ -597,7 +713,7 @@ select:focus {
   }
 
   .add-button {
-    height: 45px;
+    height: 42px;
   }
 
   .toolbar {
